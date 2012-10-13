@@ -22,13 +22,10 @@ typedef void (^SVGElementAggregationBlock)(SVGElement < SVGLayeredElement > * la
 @interface SVGDocument : SVGElement < SVGLayeredElement > {
 @protected
     CALayer *_layerTree;
-//    SEL _documentName;
 @private
     NSObject<SVGStyleCatcher> *_catcher;
     NSMutableDictionary *_styleByClassName; //styles by class name
     NSMutableDictionary *_fillLayersByUrlId; //styles by class name
-//    NSMutableDictionary *_elementsByClassName; //[className] => (NSSet *)elementsUsingThatStyle
-//    NSString *_trackClassPrefix; //only elements using classes with this prefix will be tracked
 }
 
 //external delgate for aggregating Elements and Layers using the same style class
@@ -59,9 +56,6 @@ typedef void (^SVGElementAggregationBlock)(SVGElement < SVGLayeredElement > * la
  */
 @property (nonatomic, retain) NSArray *anonymousGraphicsGroups;
 
-//@property (nonatomic, retain)NSObject<SVGStyleCatcher> *catcher;
-//- (void)setStyleCollector:( NSObject<SVGStyleCatcher> *)catcher;
-
 +(void)bustCache;
 + (void) addSVGParserExtension:(NSObject<SVGParserExtension>*) extension;
 + (id)documentNamed:(NSString *)name; // 'name' in mainBundle
@@ -75,20 +69,11 @@ typedef void (^SVGElementAggregationBlock)(SVGElement < SVGLayeredElement > * la
 - (id)initWithFrame:(CGRect)frame;
 
 - (NSString *)currentFillForClassName:(NSString *)className;
-//- (NSUInteger)changableColors;
-
-//- (BOOL)changeFillForStyle:(NSString *)className toNewFill:(NSString *)fillString;
-//- (BOOL)changeFillForStyle:(NSString *)className toNewUIColor:(UIColor *)newColor;
-
 
 -(NSDictionary *)styleForElement:(SVGElement *)element withClassName:(NSString *) className;
 - (void)setStyle:(NSDictionary *)style forClassName:(NSString *)className;
 
 - (void)setFill:(SVGGradientElement *)fillShape forId:(NSString *)idName;
-- (CALayer *)useFillId:(NSString *)idName forLayer:(CAShapeLayer *)filledLayer;
-
-
-//- (NSDictionary *)tempReturnColorsArray;
 
 #if NS_BLOCKS_AVAILABLE
 

@@ -11,7 +11,6 @@
 #import "SVGDescriptionElement.h"
 #import "SVGElement+Private.h"
 #import "SVGParser.h"
-#import "SVGParserGradient.h"
 #import "SVGParserStyles.h"
 #import "SVGTitleElement.h"
 #import "SVGPathElement.h"
@@ -55,7 +54,7 @@
 
 + (NSArray *)generalExtensions
 {
-    return [NSArray arrayWithObjects:[[[SVGParserSVG alloc] init] autorelease], [[SVGParserGradient new] autorelease], [[SVGParserStyles new] autorelease], nil];
+    return [NSArray arrayWithObjects:[[[SVGParserSVG alloc] init] autorelease], [[SVGParserStyles new] autorelease], nil];
 }
 
 static NSMutableArray* _parserExtensions;
@@ -237,7 +236,7 @@ static NSCache *_sharedDocuments;
 //        }
         
 		if (![self parseFileAtPath:aPath]) {
-			NSLog(@"[%@] - %@ MISSING FILE, COULD NOT CREATE DOCUMENT: path = %@", _cmd, [self class], aPath);
+			NSLog(@"[%@] - %@ MISSING FILE, COULD NOT CREATE DOCUMENT: path = %@", (id)_cmd, [self class], aPath);
 			
 			[self release];
 			return nil;
@@ -304,7 +303,7 @@ static NSCache *_sharedDocuments;
     
 	if (!result) 
     {
-		NSLog(@"Parser error: %@", error);
+		NSLog(@"Parser error: %@", *error);
 	}
     
 	[parser release];
@@ -341,16 +340,6 @@ static NSCache *_sharedDocuments;
 -(BOOL)parseFileAtURL:(NSURL *)url {
 	return [self parseFileAtURL:url error:nil];
 }
-
-- (CALayer *)autoreleasedLayer 
-{	
-	CALayer* _layer = [CALayer layer];
-		_layer.frame = CGRectMake(0.0f, 0.0f, _width, _height);
-	
-	return _layer;
-}
-
-- (void)layoutLayer:(CALayer *)layer { }
 
 - (SVGElement *)findFirstElementOfClass:(Class)class {
 	for (SVGElement *element in self.children) {
@@ -450,36 +439,6 @@ CGPoint relativePosition(CGPoint point, CGRect withRect)
     return point;
 }
 
-- (CALayer *)useFillId:(NSString *)idName forLayer:(CAShapeLayer *)filledLayer
-{
-    if( filledLayer != nil && _fillLayersByUrlId != nil ) //this nil check here is distrubing but blocking
-    {
-        SVGGradientElement *svgGradient = [_fillLayersByUrlId objectForKey:idName];
-        if( svgGradient != nil )
-        {
-            CAGradientLayer *gradientLayer = (CAGradientLayer *)[svgGradient autoreleasedLayer];
-            
-//            CGRect filledLayerFrame = filledLayer.frame;
-            CGRect docBounds = [self bounds];
-            gradientLayer.frame = docBounds;
-            
-//            docBounds.size.height *= 100.0f;
-            gradientLayer.startPoint = relativePosition(gradientLayer.startPoint, docBounds);
-            gradientLayer.endPoint = relativePosition(gradientLayer.endPoint, docBounds);
-            
-            [gradientLayer setMask:filledLayer];
-            return gradientLayer;
-        }
-    }
-    return filledLayer;
-}
-
-
-//- (NSUInteger)changableColors
-//{
-//    return [_elementsByClassName count];
-//}
-
 #if NS_BLOCKS_AVAILABLE
 
 - (void) applyAggregator:(SVGElementAggregationBlock)aggregator toElement:(SVGElement < SVGLayeredElement > *)element
@@ -508,7 +467,6 @@ CGPoint relativePosition(CGPoint point, CGRect withRect)
 
 +(void)trim
 {
-    [SVGParserGradient trim];
     [SVGParserSVG trim];
     [SVGParserStyles trim];
     

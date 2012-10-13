@@ -90,31 +90,4 @@ CGImageRef SVGImageCGImage(SVGImageRef img)
 	}
 }
 
-- (CALayer *)autoreleasedLayer {
-	__block CALayer *layer = [CALayer layer];
-
-	layer.name = self.identifier;
-	[layer setValue:self.identifier forKey:kSVGElementIdentifier];
-    layer.frame = CGRectMake(_x, _y, _width, _height);
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:_href]];
-        SVGImageRef image = [SVGImage imageWithData:imageData];
-        
-        //    _href = @"http://b.dryicons.com/images/icon_sets/coquette_part_4_icons_set/png/128x128/png_file.png";
-        //    NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:_href]];
-        //    UIImage *image = [UIImage imageWithData:imageData];
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-            layer.contents = (id)SVGImageCGImage(image);
-        });
-    });
-
-    return layer;
-}
-
-- (void)layoutLayer:(CALayer *)layer {
-    
-}
-
 @end
