@@ -17,8 +17,7 @@ Pod::Spec.new do |s|
                  'Eric Man'        => 'Eric@eric-mans-macbook-2.local' }
   s.source   = { :git => 'https://github.com/dlorson/SVGKit.git' }
   
-  s.ios.source_files = 'Core/**/*.{h,m}', 'iOS/**/*.{h,m}'
-  s.osx.source_files = 'Core/**/*.{h,m}', 'Mac/**/*.{h,m}', 'iOS/CAShapeLayerWithHitTest.{h,m}', 'iOS/CALayerWithChildHitTest.{h,m}'
+  s.source_files = 'Core/**/*.{h,m}'
   s.compiler_flags   = '-Wno-format'
   s.libraries = 'xml2'
   s.xcconfig = { 'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2' }
