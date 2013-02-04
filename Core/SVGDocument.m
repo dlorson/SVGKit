@@ -236,7 +236,7 @@ static NSCache *_sharedDocuments;
 //        }
         
 		if (![self parseFileAtPath:aPath]) {
-			NSLog(@"[%@] - %@ MISSING FILE, COULD NOT CREATE DOCUMENT: path = %@", (id)_cmd, [self class], aPath);
+			NSLog(@"[%s] - %@ MISSING FILE, COULD NOT CREATE DOCUMENT: path = %@", sel_getName(_cmd), [self class], aPath);
 			
 			[self release];
 			return nil;
@@ -384,7 +384,7 @@ static NSCache *_sharedDocuments;
 		
 		_viewBoxFrame = CGRectMake([[boxElements objectAtIndex:0] floatValue], [[boxElements objectAtIndex:1] floatValue], [[boxElements objectAtIndex:2] floatValue], [[boxElements objectAtIndex:3] floatValue]);
 #if TARGET_OS_IPHONE
-		NSLog(@"[%@] DEBUG INFO: set document viewBox = %@", [self class], NSStringFromCGRect(self.viewBoxFrame));
+		//NSLog(@"[%@] DEBUG INFO: set document viewBox = %@", [self class], NSStringFromCGRect(self.viewBoxFrame));
 #endif
 	}
 }
