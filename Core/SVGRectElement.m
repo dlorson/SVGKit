@@ -12,7 +12,7 @@
 
 @interface SVGRectElement ()
 
-void CGPathAddRoundedRect (CGMutablePathRef path, CGRect rect, CGFloat radius);
+void SVGPathAddRoundedRectCustom (CGMutablePathRef path, CGRect rect, CGFloat radius);
 
 @end
 
@@ -28,7 +28,7 @@ void CGPathAddRoundedRect (CGMutablePathRef path, CGRect rect, CGFloat radius);
 
 // adapted from http://www.cocoanetics.com/2010/02/drawing-rounded-rectangles/
 
-void CGPathAddRoundedRect (CGMutablePathRef path, CGRect rect, CGFloat radius) {
+void SVGPathAddRoundedRectCustom (CGMutablePathRef path, CGRect rect, CGFloat radius) {
 	CGRect innerRect = CGRectInset(rect, radius, radius);
 	
 	CGFloat innerRight = innerRect.origin.x + innerRect.size.width;
@@ -92,7 +92,7 @@ void CGPathAddRoundedRect (CGMutablePathRef path, CGRect rect, CGFloat radius) {
 		CGPathAddRect(path, NULL, rect);
 	}
 	else if (_rx == _ry) {
-		CGPathAddRoundedRect(path, rect, _rx);
+		SVGPathAddRoundedRectCustom(path, rect, _rx);
 	}
 	else {
 		NSLog(@"Unsupported corner-radius configuration: rx differs from ry");
