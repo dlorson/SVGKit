@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
                  'Steven Fusco'    => 'sfusco@spiral.local',
                  'Eric Man'        => 'Eric@eric-mans-macbook-2.local' }
   s.source   = { :git => 'https://github.com/dlorson/SVGKit.git' }
-  
+  s.requires_arc = false
   s.source_files = 'Core/**/*.{h,m}'
   s.compiler_flags   = '-Wno-format'
   s.libraries = 'xml2'
